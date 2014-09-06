@@ -83,7 +83,7 @@ if node['kernel']['machine'] == 'x86_64'
     S2='(started network-interface or started '
     S3='network-manager or started networking) )'
     NEW="\n${S1}${S2}${S3}"
-    grep "$NEW" /etc/init/serviced.conf
+    grep "$S1$S2$S3" /etc/init/serviced.conf
     if [ $? -ne 0 ]; then
       sed -i -e 's|^\(start on.*\)$|#\1|' -e '/^#start on/ s|$|'"${NEW}"'|' /etc/init/serviced.conf
     fi
@@ -109,6 +109,22 @@ if node['kernel']['machine'] == 'x86_64'
     fi
     EOH
   end
+  
+  bash "Add hosts to the default resource pool" do
+    user "root"
+    code <<-EOH
+    privateipv4="$(ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
+    serviced host add $privateipv4:4979 default
+    EOH
+  end
+  
+  bash "Deploy an application (the deployment step can take 10-20 minutes)" do
+    user "root"
+    code <<-EOH
+    TEMPLATEID=$(serviced template list | grep 'Zenoss.core' | awk '{print $1}')
+    serviced template deploy $TEMPLATEID default zenoss
+    EOH
+  end   
 
   log "Zenoss Core beta 2 installed" do
     message "Set password for zenoss user: passwd zenoss\n \
