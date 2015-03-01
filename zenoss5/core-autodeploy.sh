@@ -405,7 +405,7 @@ else
 fi
 
 echo -e "${yellow}1.10 /opt/serviced/var/backups filesystem check${endColor}"
-fs=$(df -T | grep ' \/opt/\serviced\/var\/backups$' | awk '{print $2}')
+fs=$(df -T | grep ' \/opt\/serviced\/var\/backups$' | awk '{print $2}')
 if [ -z "$fs" ]; then
     echo -e "${red}/opt/serviced/var/backups filesystem was not detected${endColor}"
     exit 1
