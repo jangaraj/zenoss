@@ -414,7 +414,7 @@ if [ "$fs" != "$servicedbackups_fs_type" ]; then
     echo -e "${red}${fs} /opt/serviced/var/backups filesystem detected, but ${servicedbackups_fs_type} is required${endColor}"
     exit 1    
 fi
-ss=$(df -T | grep ' \/opt\/serviced\/var\/backups$' | awk '{print $3}')
+ss=$(df -T | grep ' \/opt/\serviced\/var\/backups$' | awk '{print $3}')
 mss=$(($servicedbackups_fs_min_size * $g2k))
 if [ $ss -lt $mss ]; then
     echo -e "${red}/opt/serviced/var/backups filesystem size is less than required ${servicedbackups_fs_min_size}GB${endColor}"
