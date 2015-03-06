@@ -188,3 +188,8 @@ Add following line to your hosts file:
 
 Credit: www.jangaraj.com
 ```
+
+Author
+======
+ 
+[Devops Monitoring zExpert](http://www.jangaraj.com), who loves monitoring systems, which start with letter Z. Those are Zabbix and Zenoss. [LinkedIn] (http://uk.linkedin.com/in/jangaraj/).
